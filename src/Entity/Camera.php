@@ -5,12 +5,21 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\CameraRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass=CameraRepository::class)
  * @ORM\Table(name="cameras", options={"comment":"Таблица камер видеонаблюдения"})
  */
+#[ApiResource(
+    collectionOperations: ['get' => [
+        'normalization_context' => [
+            'groups' => 'cameras:list'
+        ]
+    ]],
+    paginationClientEnabled: false
+)]
 class Camera extends AbstractEntity
 {
     /**
@@ -18,36 +27,43 @@ class Camera extends AbstractEntity
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer", options={"comment":"Ключевое поле"})
      */
+    #[Groups(['cameras:list'])]
     private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255, options={"comment":"Наименование камеры"})
      */
+    #[Groups(['cameras:list'])]
     private ?string $title;
 
     /**
      * @ORM\Column(type="float", options={"comment":"Широта"})
      */
+    #[Groups(['cameras:list'])]
     private ?float $latitude;
 
     /**
      * @ORM\Column(type="float", options={"comment":"Долгота"})
      */
+    #[Groups(['cameras:list'])]
     private ?float $longitude;
 
     /**
      * @ORM\Column(type="float", options={"comment":"Угол", "default":"0"})
      */
+    #[Groups(['cameras:list'])]
     private ?float $angle = 0;
 
     /**
      * @ORM\Column(type="string", length=255, options={"comment":"Ссылка на транслюцию"})
      */
+    #[Groups(['cameras:list'])]
     private ?string $source;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true, options={"comment":"Ссылка на превью"})
      */
+    #[Groups(['cameras:list'])]
     private ?string $preview;
 
     /**
