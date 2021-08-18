@@ -6,6 +6,8 @@ use App\Repository\OwnerRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
+use JetBrains\PhpStorm\Pure;
 
 /**
  * @ORM\Entity(repositoryClass=OwnerRepository::class)
@@ -28,12 +30,10 @@ class Owner extends AbstractEntity
     /**
      * @ORM\OneToMany(targetEntity=Camera::class, mappedBy="owner")
      */
-    private ArrayCollection $cameras;
+    private Collection $cameras;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
-        parent::__construct();
-
         $this->cameras = new ArrayCollection();
     }
 

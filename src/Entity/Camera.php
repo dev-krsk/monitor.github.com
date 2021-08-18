@@ -56,6 +56,11 @@ class Camera extends AbstractEntity
      */
     private ?Owner $owner;
 
+    /**
+     * @ORM\Column(type="integer", options={"comment":"Идентификатор камеры у владельца"})
+     */
+    private ?int $key;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -141,6 +146,18 @@ class Camera extends AbstractEntity
     public function setOwner(?Owner $owner): self
     {
         $this->owner = $owner;
+
+        return $this;
+    }
+
+    public function getKey(): ?int
+    {
+        return $this->key;
+    }
+
+    public function setKey(int $key): self
+    {
+        $this->key = $key;
 
         return $this;
     }
